@@ -46,7 +46,7 @@ function App() {
   return (
     <div className={Classes.appContainer}>
       <ChatHeader isTyping={isTyping} username={usernameOfOpposite} />
-      <MessageContainer messages={messages} socketId={'user1'} />
+      <MessageContainer messages={messages} socketId={socket?.id} />
       <TextInput value={messageText} onChange={(event) => setMessageText(event.target.value)} onEnter={handleMessage} />
     </div>
   )
