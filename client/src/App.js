@@ -29,6 +29,10 @@ function App() {
 
   const handleMessage = event => {
     if (event.key === 'Enter' && event.shiftKey === false) {
+      if(messageText.trim() === ''){
+        event.preventDefault()
+        return
+      }
       const message = {
         messageText: messageText,
         socketId: socket.id,
