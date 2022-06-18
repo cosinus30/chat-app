@@ -1,0 +1,20 @@
+.message {
+  border-radius: 25px;
+}
+
+.highlight {
+
+}
+
+.think {
+
+}
+
+.fromMe {
+  align-self: flex-end;
+  justify-self: flex-end;
+}
+
+.fromOtherSide {
+  align-self: flex-start;
+}
