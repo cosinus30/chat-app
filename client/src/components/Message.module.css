@@ -1,5 +1,8 @@
 .message {
   border-radius: 25px;
+  padding: 16px 24px;
+  margin: 4px 0;
+  max-width: 75%;
 }
 
 .highlight {
@@ -12,9 +15,11 @@
 
 .fromMe {
   align-self: flex-end;
-  justify-self: flex-end;
+  background-color: greenyellow;
+  
 }
 
 .fromOtherSide {
   align-self: flex-start;
+  background-color: #f0f0f0;
 }
