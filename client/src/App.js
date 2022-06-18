@@ -14,10 +14,10 @@ function messagesReducer(state, action) {
     case 'NEW_MESSAGE': {
       const {messageText, socketId, author} = action.message
       const [verb, ...rest] = messageText.trim().split(' ')
-      const isItMe = socketId === state.socket?.id;
+      const isItMe = socketId === state.socket?.id
       if (verb === '/nick') {
         const authorChanged = state.messages.map(message => {
-          return {...message, author: rest}
+          return {...message, author: rest.join(' ')}
         })
         const newNickname = isItMe ? rest : state.myNickname
         const newOpponentNickname = isItMe ? state.opponentNickname : rest.join(' ')
@@ -30,19 +30,34 @@ function messagesReducer(state, action) {
       } else if (verb === '/think') {
         return {
           ...state,
-          messages: [...state.messages, {...action.message, messageText: rest.join(' '), type: 'think'}]
+          messages: [
+            ...state.messages,
+            {...action.message, messageText: rest.join(' '), type: 'think'},
+          ],
         }
       } else if (verb === '/oops') {
+        let indexOfLastElement = state.messages
+          .reverse()
+          .findIndex(message => message.socketId === socketId)
+        if (indexOfLastElement < 0) return state
+        indexOfLastElement = state.messages.length - indexOfLastElement - 1
+        return {
+          ...state,
+          messages: [
+            ...state.messages.slice(0, indexOfLastElement),
+            ...state.messages.slice(indexOfLastElement + 1),
+          ],
+        }
       } else if (verb === '/highlight') {
       } else if (verb === '/fadelast') {
       } else if (verb === '/countdown') {
       } else {
         return {
           ...state,
-          messages: [...state.messages, {...action.message}]
+          messages: [...state.messages, {...action.message}],
         }
       }
-      break;
+      break
     }
     case 'INITIALIZE_SOCKET': {
       return {
