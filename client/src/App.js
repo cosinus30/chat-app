@@ -14,12 +14,13 @@ function messagesReducer(state, action) {
     case 'NEW_MESSAGE': {
       const {messageText, socketId, author} = action.message
       const [verb, ...rest] = messageText.trim().split(' ')
+      const isItMe = socketId === state.socket?.id;
       if (verb === '/nick') {
         const authorChanged = state.messages.map(message => {
           return {...message, author: rest}
         })
-        const newNickname = socketId === state.socket?.id ? rest : state.myNickname
-        const newOpponentNickname = socketId === state.socket?.id ? state.opponentNickname : rest
+        const newNickname = isItMe ? rest : state.myNickname
+        const newOpponentNickname = isItMe ? state.opponentNickname : rest.join(' ')
         return {
           ...state,
           messages: authorChanged,
