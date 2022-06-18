@@ -28,6 +28,10 @@ function messagesReducer(state, action) {
           opponentNickname: newOpponentNickname,
         }
       } else if (verb === '/think') {
+        return {
+          ...state,
+          messages: [...state.messages, {...action.message, messageText: rest.join(' '), type: 'think'}]
+        }
       } else if (verb === '/oops') {
       } else if (verb === '/highlight') {
       } else if (verb === '/fadelast') {

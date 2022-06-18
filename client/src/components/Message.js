@@ -1,9 +1,8 @@
 import classes from './Message.module.css'
 
 function Message({message, isAuthorMe}) {
-  const {messageText, author, socketId, ...rest} = message
-  
-  const messageClasses = `${classes.message} ${isAuthorMe ? classes.fromMe : classes.fromOtherSide}`
+  const {messageText, type} = message
+  const messageClasses = `${classes.message} ${isAuthorMe ? classes.fromMe : classes.fromOtherSide} ${classes[type]}`
   return <p className={messageClasses}>{messageText}</p>
 }
 
