@@ -1,0 +1,9 @@
+.messageInput {
+  margin-top: 25%;
+  resize: none;
+  width: 420px;
+  padding: 16px 32px;
+  border-radius: 25px;
+  justify-self: flex-end;
+  margin: 16px auto;
+}

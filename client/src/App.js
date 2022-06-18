@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import Classes from './App.module.css'
 import ChatHeader from './components/ChatHeader'
 import MessageContainer from './components/MessageContainer'
+import TextInput from './components/TextInput'
 
 const SERVER = 'http://localhost:3001'
 
@@ -51,9 +52,10 @@ function App() {
       time: '23.56',
     },
   ]
-
   const isTyping = true
   const usernameOfOpposite = 'Dexter'
+
+  const [messageText, setMessageText] = useState("")
 
   useEffect(() => {
     const newSocket = io(SERVER)
@@ -64,6 +66,7 @@ function App() {
     <div className={Classes.appContainer}>
       <ChatHeader isTyping={isTyping} username={usernameOfOpposite} />
       <MessageContainer messages={messages} socketId={'user1'} />
+      <TextInput value={messageText} onChange={setMessageText}/>
     </div>
   )
 }
