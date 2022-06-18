@@ -33,15 +33,18 @@ function messagesReducer(state, action) {
       } else if (verb === '/fadelast') {
       } else if (verb === '/countdown') {
       } else {
-        return state
+        return {
+          ...state,
+          messages: [...state.messages, {...action.message}]
+        }
       }
+      break;
     }
     case 'INITIALIZE_SOCKET': {
       return {
         ...state,
         socket: action.socket,
       }
-      break
     }
     default: {
       break
