@@ -1,6 +1,10 @@
+import { useEffect } from 'react'
+import { io } from 'socket.io-client'
 import Classes from './App.module.css'
 import ChatHeader from './components/ChatHeader'
 import MessageContainer from './components/MessageContainer'
+
+const SERVER = 'http://localhost:3001'
 
 function App() {
   const messages = [
@@ -50,6 +54,11 @@ function App() {
 
   const isTyping = true
   const usernameOfOpposite = 'Dexter'
+
+  useEffect(() => {
+    const newSocket = io(SERVER)
+    return () => newSocket.close()
+  }, [])
 
   return (
     <div className={Classes.appContainer}>
