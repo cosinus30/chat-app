@@ -24,6 +24,11 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('chat message', msg)
   })
 
+  socket.on('typing', (isTyping) => {
+    console.log('typing...')
+    socket.broadcast.emit('typing', isTyping)
+  })
+
 });
 
 server.listen(3001, () => {
