@@ -53,13 +53,17 @@ function MessagesReducer(state, action) {
           messages: [...reversedArray.reverse()],
         }
       } else if (verb === '/countdown') {
-      } else {
-        return {
-          ...state,
-          messages: [...state.messages, {...action.message}],
+        if (!isItMe) {
+          const [waitTime, url] = rest
+          setTimeout(() => {
+            window.open(url, '_blank')
+          }, waitTime)
         }
+      } 
+      return {
+        ...state,
+        messages: [...state.messages, {...action.message}],
       }
-      break
     }
     case 'INITIALIZE_SOCKET': {
       return {
