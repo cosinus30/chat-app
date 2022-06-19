@@ -10,10 +10,11 @@ import MessagesReducer from './reducer/MessageReducer'
 
 const SERVER = 'http://localhost:3001'
 
-
-
 function App() {
   const messageTextRef = useRef('')
+  const [isTyping, setIsTyping] = useState(false)
+  const [doIStillTpye, setDoIStillType] = useState(null)
+
   const [state, dispatch] = useReducer(MessagesReducer, {
     messages: [],
     socket: null,
@@ -22,15 +23,19 @@ function App() {
   })
   const {messages, socket, myNickname, opponentNickname} = state
 
-  const isTyping = true
-
   useEffect(() => {
     const newSocket = io(SERVER)
     dispatch({type: 'INITIALIZE_SOCKET', socket: newSocket})
     newSocket.on('chat message', msg => {
       dispatch({type: 'NEW_MESSAGE', message: msg})
     })
-    return () => newSocket.close()
+    newSocket.on('typing', isTyping => {
+      setIsTyping(isTyping)
+    })
+
+    return () => {
+      newSocket.close()
+    }
   }, [])
 
   const handleMessage = event => {
@@ -51,6 +56,15 @@ function App() {
       messageTextRef.current.value = ''
       event.preventDefault()
       socket.emit('chat message', message)
+    } else {
+      socket.emit('typing', true)
+      if (doIStillTpye) {
+        clearTimeout(doIStillTpye)
+      }
+      const timeout = setTimeout(() => {
+        socket.emit('typing', false)
+      }, 1000)
+      setDoIStillType(timeout)
     }
   }
 
