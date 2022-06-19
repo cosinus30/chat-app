@@ -3,6 +3,8 @@ import {io} from 'socket.io-client'
 import {v4 as uuidv4} from 'uuid'
 
 import Classes from './App.module.css'
+import MessageContainer from './components/Message/MessageContainer'
+import TextInput from './components/Form/TextInput'
 import MessagesReducer from './reducer/MessageReducer'
 
 const SERVER = 'http://localhost:3001'
@@ -10,7 +12,7 @@ const SERVER = 'http://localhost:3001'
 
 
 function App() {
-  const [messageText, setMessageText] = useState('')
+  const messageTextRef = useRef('')
   const [state, dispatch] = useReducer(MessagesReducer, {
     messages: [],
     socket: null,
@@ -32,6 +34,7 @@ function App() {
 
   const handleMessage = event => {
     if (event.key === 'Enter' && event.shiftKey === false) {
+      const messageText = messageTextRef.current?.value
       if (messageText.trim() === '') {
         event.preventDefault()
         return
@@ -44,7 +47,7 @@ function App() {
         id: uuidv4(),
       }
       dispatch({type: 'NEW_MESSAGE', message})
-      setMessageText('')
+      messageTextRef.current.value = ''
       event.preventDefault()
       socket.emit('chat message', message)
     }
@@ -55,8 +58,7 @@ function App() {
       <ChatHeader isTyping={isTyping} username={opponentNickname} />
       <MessageContainer messages={messages} socketId={socket?.id} />
       <TextInput
-        value={messageText}
-        onChange={event => setMessageText(event.target.value)}
+        ref={messageTextRef}
         onEnter={handleMessage}
       />
     </div>
