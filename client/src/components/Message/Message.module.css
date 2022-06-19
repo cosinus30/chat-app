@@ -26,3 +26,7 @@
   align-self: flex-start;
   background-color: #f0f0f0;
 }
+
+.fadelast {
+  opacity: 0.1;
+}

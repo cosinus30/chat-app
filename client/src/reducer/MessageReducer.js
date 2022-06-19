@@ -45,6 +45,13 @@ function MessagesReducer(state, action) {
           ],
         }
       } else if (verb === '/fadelast') {
+        const reversedArray = [...state.messages].reverse()
+        let lastSentElement = reversedArray.find(message => message.socketId === socketId)
+        lastSentElement.type = 'fadelast'
+        return {
+          ...state,
+          messages: [...reversedArray.reverse()],
+        }
       } else if (verb === '/countdown') {
       } else {
         return {
