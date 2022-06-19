@@ -25,9 +25,8 @@ function MessagesReducer(state, action) {
           ],
         }
       } else if (verb === '/oops') {
-        let indexOfLastElement = state.messages
-          .reverse()
-          .findIndex(message => message.socketId === socketId)
+        const reversedArray = [...state.messages].reverse()
+        let indexOfLastElement = reversedArray.findIndex(message => message.socketId === socketId)
         if (indexOfLastElement < 0) return state
         indexOfLastElement = state.messages.length - indexOfLastElement - 1
         return {
