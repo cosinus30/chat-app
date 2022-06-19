@@ -1,8 +1,9 @@
-import {useEffect, useReducer, useState} from 'react'
+import {useEffect, useReducer, useRef, useState} from 'react'
 import {io} from 'socket.io-client'
 import {v4 as uuidv4} from 'uuid'
 
 import Classes from './App.module.css'
+import ChatHeader, {Avatar, ChatInfo, Option, Options} from './components/Header/ChatHeader'
 import MessageContainer from './components/Message/MessageContainer'
 import TextInput from './components/Form/TextInput'
 import MessagesReducer from './reducer/MessageReducer'
@@ -55,7 +56,17 @@ function App() {
 
   return (
     <div className={Classes.appContainer}>
-      <ChatHeader isTyping={isTyping} username={opponentNickname} />
+      <ChatHeader isTyping={isTyping} username={opponentNickname}>
+        <Avatar image={{url: 'https://www.w3schools.com/howto/img_avatar2.png', desc: 'avatar'}} />
+        <ChatInfo>
+          {opponentNickname && <span>{opponentNickname}</span>}
+          {isTyping && <span>typing...</span>}
+        </ChatInfo>
+        <Options>
+          <Option>Search</Option>
+          <Option>Mute this conversation</Option>
+        </Options>
+      </ChatHeader>
       <MessageContainer messages={messages} socketId={socket?.id} />
       <TextInput
         ref={messageTextRef}
