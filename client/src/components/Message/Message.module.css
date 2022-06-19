@@ -3,11 +3,13 @@
   padding: 16px 24px;
   margin: 4px 0;
   max-width: 75%;
-  color: black
+  color: black;
+  opacity: 0.8;
 }
 
 .highlight {
-
+  filter: opacity(1);
+  font-size: 1.1em;
 }
 
 .think {

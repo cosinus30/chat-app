@@ -38,6 +38,13 @@ function MessagesReducer(state, action) {
           ],
         }
       } else if (verb === '/highlight') {
+        return {
+          ...state,
+          messages: [
+            ...state.messages,
+            {...action.message, messageText: rest.join(' '), type: 'highlight'},
+          ],
+        }
       } else if (verb === '/fadelast') {
       } else if (verb === '/countdown') {
       } else {
