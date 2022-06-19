@@ -70,7 +70,7 @@ function App() {
 
   return (
     <div className={Classes.appContainer}>
-      <ChatHeader isTyping={isTyping} username={opponentNickname}>
+      <ChatHeader>
         <Avatar image={{url: 'https://www.w3schools.com/howto/img_avatar2.png', desc: 'avatar'}} />
         <ChatInfo>
           {opponentNickname && <span>{opponentNickname}</span>}
@@ -82,10 +82,7 @@ function App() {
         </Options>
       </ChatHeader>
       <MessageContainer messages={messages} socketId={socket?.id} />
-      <TextInput
-        ref={messageTextRef}
-        onEnter={handleMessage}
-      />
+      <TextInput ref={messageTextRef} onEnter={handleMessage} />
     </div>
   )
 }
